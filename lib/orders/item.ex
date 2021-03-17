@@ -6,8 +6,8 @@ defmodule Exlivery.Orders.Item do
   @enforce_keys @keys
 
   defstruct @keys
-  
-  def build(description, category, unit_price, unit) 
+
+  def build(description, category, unit_price, unit)
     when unit > 0 and category in @categorys do
 
     unit_price
@@ -19,9 +19,10 @@ defmodule Exlivery.Orders.Item do
     {:error, "Invalid parameters"}
   end
 
-  def build_item({:ok,unit_price}, description, category, unit ) do
+  defp build_item({:ok,unit_price}, description, category, unit ) do
     {:ok,
-        %__MODULE__{                                                 description: description,
+        %__MODULE__{
+          description: description,
           category: category,
           unit: unit,
           unit_price: unit_price
@@ -29,6 +30,6 @@ defmodule Exlivery.Orders.Item do
       }
   end
 
-  def build_item(:error, _description, _category, _unit), do: {:error,"Invalid parameters" }
+  defp build_item(:error, _description, _category, _unit), do: {:error,"Invalid price" }
 
 end

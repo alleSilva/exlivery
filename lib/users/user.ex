@@ -16,5 +16,5 @@ defmodule Exlivery.Users.User do
     }
   end
 
-  def biuld(_name, _email, _cpf, _age, _address), do: {:error, "Invalid parameters"}
+  def build(_name, _email, _cpf, _age, _address), do: {:error, "Invalid parameters"}
 end

@@ -8,7 +8,7 @@ defmodule Exlivery.Orders.Order do
 
   defstruct @keys
 
-  def build(%User{address: address, cpf: cpf}, [%Item{} | _items] = items) do
+  def build(%User{cpf: cpf, address: address}, [%Item{} | _items] = items) do
     {:ok,
       %__MODULE__{
         user_cpf: cpf,
@@ -21,12 +21,12 @@ defmodule Exlivery.Orders.Order do
 
   def build(_user, _items), do: {:error, "Invalid parameters"}
 
-  def calculate_total_price(items) do
-    Enum.reduce(items, Decimal.new("0.00"), 
-      &sum_prices(&1,&2))
+  defp calculate_total_price(items) do
+    Enum.reduce(items, Decimal.new("0.00"),
+      fn items, acc -> sum_prices(items ,acc) end)
   end
 
-  def sum_prices(
+  defp sum_prices(
       %Item{unit_price: price,unit: unit }, acc) do
     price
     |> Decimal.mult(unit)
